@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
 const cors = require('cors');
+const authController = require('./controllers/authControllers/auth.js');
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -15,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 //controllers
-
+app.use('/auth', authController);
 
 
 app.listen('3000', () => {
