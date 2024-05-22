@@ -23,5 +23,23 @@ router.get("/", async (req, res)=>{
 });
 
 
+router.put("/:id", async (req, res)=>{
+    const {id} = req.params.id;
+    try{
+        const updatedPlayer = await Player.findByIdAndUpdate(id, req.body, {new: true});
+        if(!updatedPlayer){
+            res.status(404);
+            throw new Error(`Player does not exist`);
+        }
+        res.status(200).json(updatedPlayer);
+    }catch(error){
+        if(res.statusCode === 404){
+            res.json({error:error.message});
+        }
+        res.status(500).json({error:error.message});
+    }
+});
+
+
 //Export
 module.exports = router;
