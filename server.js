@@ -5,7 +5,11 @@ dotenv.config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require("morgan");
+
 const playersRouter = require("./controllers/player-controllers/players.js"); //Routes for Players
+
+const authController = require('./controllers/authControllers/auth.js');
+
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -20,6 +24,7 @@ app.use(morgan("dev"));
 //controllers
 app.use("/players", playersRouter);
 
+app.use('/auth', authController);
 
 app.listen(process.env.PORT ? process.env.PORT : 3000, () => {
     console.log(`Server is running on port ${process.env.PORT ? process.env.PORT : 3000}`);
