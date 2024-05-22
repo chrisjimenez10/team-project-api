@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../../models/users');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 router.post('/register' , async(req, res) => {
     try {
