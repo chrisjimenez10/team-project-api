@@ -5,6 +5,7 @@ dotenv.config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require("morgan");
+const playersRouter = require("./controllers/player-controllers/players.js"); //Routes for Players
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //controllers
-
+app.use("/players", playersRouter);
 
 
 app.listen(process.env.PORT ? process.env.PORT : 3000, () => {
