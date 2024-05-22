@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../../models/users');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../../middleware/verify');
 
 router.post('/register' , async(req, res) => {
     try {
@@ -31,5 +32,19 @@ router.post('/login' , async(req, res) => {
         res.status(400).json({ error: error.message })
     }
 })
+
+router.get('/:userId', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user.id !== req.params.userId){ 
+            return res.status(401).json({ error: "Unauthorized"})
+        }
+        if(!user) res.status(400).json({error: 'Profile not found...'});
+        res.json({user});
+    } catch (error) {
+        res.status(500).json({error: error.message });
+    }
+})
+
 
 module.exports = router;
