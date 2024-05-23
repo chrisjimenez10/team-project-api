@@ -10,6 +10,8 @@ const playersRouter = require("./controllers/player-controllers/players.js"); //
 
 const authController = require('./controllers/authControllers/auth.js');
 
+const fetchBasketballData = require("./sports-api.js");
+
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -25,6 +27,11 @@ app.use(morgan("dev"));
 app.use("/players", playersRouter);
 
 app.use('/auth', authController);
+
+    //Fetched Data from NBA-API
+app.get("/nba/:team", async (req, res)=>{
+    res.json(await fetchBasketballData(req.params.team));
+});
 
 app.listen(process.env.PORT ? process.env.PORT : 3000, () => {
     console.log(`Server is running on port ${process.env.PORT ? process.env.PORT : 3000}`);
