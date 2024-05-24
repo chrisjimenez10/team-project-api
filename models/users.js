@@ -8,6 +8,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    team: [],
+})
+userSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        delete returnedObject.password;
     }
 })
 
