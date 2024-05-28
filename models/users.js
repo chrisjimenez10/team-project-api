@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
     },
     team: [],
     ovr: String,
+    win: Number,
+    loss: Number,
+    logo: String,
 })
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
