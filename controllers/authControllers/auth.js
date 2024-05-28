@@ -47,7 +47,7 @@ router.get('/:userId', verifyToken, async (req, res) => {
 })
 
 router.put('/:userId/updateTeam', verifyToken, async (req, res) => {
-        
+    
     try {
         const { team } = req.body;
         const user = await User.findById(req.params.userId);
@@ -62,6 +62,21 @@ router.put('/:userId/updateTeam', verifyToken, async (req, res) => {
     }
 })
 
+router.put('/:userId/updateOvr', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user.id !== req.params.userId){ 
+            return res.status(401).json({ error: "Unauthorized"})
+        }
+        if(!user) res.status(400).json({error: 'Profile not found...'});
+        const newData = await User.findByIdAndUpdate(req.params.userId, {ovr: req.body.ovr});
+        return res.status(200).json({newData});
+    } catch (error) {
+        res.status(500).json({error: error.message });
+    }
+})
+
+
 router.get('/:userId/getTeam', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);
@@ -74,6 +89,7 @@ router.get('/:userId/getTeam', verifyToken, async (req, res) => {
         res.status(500).json({error: error.message });
     }
 })
+
 
 
 

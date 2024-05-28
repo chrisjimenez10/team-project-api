@@ -7,7 +7,7 @@ const cors = require('cors');
 const morgan = require("morgan");
 
 const playersRouter = require("./controllers/player-controllers/players.js"); //Routes for Players
-
+const userController = require('./controllers/authControllers/users.js');
 const authController = require('./controllers/authControllers/auth.js');
 
 const fetchBasketballData = require("./sports-api.js");
@@ -25,7 +25,7 @@ app.use(morgan("dev"));
 
 //controllers
 app.use("/players", playersRouter);
-
+app.use('/users', userController);
 app.use('/auth', authController);
 
     //Fetched Data from NBA-API

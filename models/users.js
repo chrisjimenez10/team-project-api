@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     team: [],
+    ovr: String,
 })
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
