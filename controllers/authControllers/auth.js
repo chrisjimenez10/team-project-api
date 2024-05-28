@@ -93,6 +93,63 @@ router.put('/:userId/updateLogo', verifyToken, async (req, res) => {
     }
 })
 
+router.put('/:userId/takeL', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user.id !== req.params.userId) {
+            return res.status(401).json({ error: "Unauthorized" })
+        }
+        if (!user) res.status(400).json({ error: 'Profile not found...' });
+        const newData = await User.findByIdAndUpdate(req.params.userId, { $inc: { loss: 1 } }, { new: true });
+        return res.status(200).json({ loss: newData.loss });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+router.put('/:userId/takeW', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user.id !== req.params.userId) {
+            return res.status(401).json({ error: "Unauthorized" })
+        }
+        if (!user) res.status(400).json({ error: 'Profile not found...' });
+        const newData = await User.findByIdAndUpdate(req.params.userId, { $inc: { win: 1 } }, { new: true });
+        return res.status(200).json({ win: newData.win });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+router.put('/:userId/giveL/:challengerId', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        const challenger = await User.findById(req.params.challengerId);
+        if (user.id !== req.params.userId) {
+            return res.status(401).json({ error: "Unauthorized" })
+        }
+        if (!user) res.status(400).json({ error: 'Profile not found...' });
+        if (!challenger) res.status(400).json({ error: 'Challenger not found...' });
+        const newData = await User.findByIdAndUpdate(req.params.challengerId, { $inc: { loss: 1 } }, { new: true });
+        return res.status(200).json({ loss: newData.loss });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+router.put('/:userId/giveW/:challengerId', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        const challenger = await User.findById(req.params.challengerId);
+        if (user.id !== req.params.userId) {
+            return res.status(401).json({ error: "Unauthorized" })
+        }
+        if (!user) res.status(400).json({ error: 'Profile not found...' });
+        if (!challenger) res.status(400).json({ error: 'Challenger not found...' });
+        const newData = await User.findByIdAndUpdate(req.params.challengerId, { $inc: { win: 1 } }, { new: true });
+        return res.status(200).json({ win: newData.win });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
 router.get('/:userId/getTeam', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);

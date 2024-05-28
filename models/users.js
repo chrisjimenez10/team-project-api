@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     team: [],
-    ovr: String,
+    ovr: Number,
     win: Number,
     loss: Number,
     logo: String,
