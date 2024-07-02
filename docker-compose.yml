@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+      # NOTE: We can include our .env file here rather than COPYING it into our Docker Image, so that we keep sensitive data private and only available during Runtime of the application
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      #This is the networks where all the microservices needed to run the main application will communicate with each other
+    networks:
+      - team-project-app-network
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - team-project-app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  team-project-app-network:
+
